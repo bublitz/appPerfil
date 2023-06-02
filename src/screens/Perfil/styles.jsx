@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -47,4 +48,26 @@ export const RespText = styled.Text`
   font-size: 14px;
   color: #000;
   padding: 10px;
+`;
+
+export const Area = styled.TouchableOpacity`
+  border-radius: 20px;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+`;
+
+export const InfoArea = styled.View`
+  flex: 1;
+  margin-left: 15px;
+  margin-right: 15px;
+  align-itens: center;
+`;
+
+export const TitleText = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #ffffff;
 `;
