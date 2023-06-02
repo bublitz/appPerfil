@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  margin: 10px;
+  margin: 1px;
 `;
 
 export const LoadingIcon = styled.ActivityIndicator`
@@ -14,7 +14,8 @@ export const LoadingIcon = styled.ActivityIndicator`
 export const HeaderText = styled.Text`
   font-size: 14px;
   font-weight: bold;
-  color: #000;
+  color: #fff;
+  margin-bottom: 5px;
 `;
 
 export const InputArea = styled.View`
@@ -40,13 +41,13 @@ export const CallButtonText = styled.Text`
 
 export const Scroller = styled.ScrollView`
   flex: 1;
-  padding: 10px;
-  background-color: #fff;
+  padding: 5px;
+  background-color: #0069ea;
 `;
 
 export const RespText = styled.Text`
   font-size: 14px;
-  color: #000;
+  color: #fff;
   padding: 10px;
 `;
 

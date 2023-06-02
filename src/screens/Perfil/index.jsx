@@ -25,8 +25,9 @@ export default () => {
 
   const [text, setText] = useState('');
   const [resp, setResp] = useState('');
-  const [lista, setLista] = useState([]);
+  const [listQuest, setListQuest] = useState([]);
   const [loadQuest, setLoadQuest] = useState(false);
+  const [listHint, setListHint] = useState([]);
   const [loadHint, setLoadHint] = useState(false);
 
   const [showHint, setShowHint] = useState(false);
@@ -36,7 +37,9 @@ export default () => {
   const handleHintClick = async () => {
     if (text != '' || value != null) {
       setResp('');
+      setListQuest([]);
       setLoadHint(true);
+      setShowHint(true);
       let json = null;
       try {
         json = await Api.hint(value + ' ' + text);
@@ -44,7 +47,7 @@ export default () => {
         Toast.show('Erro: ' + err.message, Toast.LONG);
       } finally {
         setLoadHint(false);
-        if (json.error || json.legth == 0) {
+        if (json.error || json.length == 0) {
           Toast.show('Tente novamente!', Toast.LONG);
         } else {
           setResp(json.choices[0].message.content);
@@ -59,7 +62,9 @@ export default () => {
   const handleQuestClick = async () => {
     if (text != '' || value != null) {
       setResp('');
+      setListHint([]);
       setLoadQuest(true);
+      setShowHint(false);
       let json = null;
       try {
         json = await Api.question(value + ' ' + text);
@@ -67,7 +72,7 @@ export default () => {
         Toast.show('Erro: ' + err.message, Toast.LONG);
       } finally {
         setLoadQuest(false);
-        if (json.error || json.legth == 0) {
+        if (json.error || json.length == 0) {
           Toast.show('Tente novamente!', Toast.LONG);
         } else {
           setResp(json.choices[0].message.content);
@@ -81,11 +86,18 @@ export default () => {
 
   useEffect(() => {
     if (resp != '') {
-      setLista(
-        resp
-          .split('\n')
-          .filter(linha => linha.charAt(0) <= '9' && linha.charAt(0) >= '0'),
-      );
+      if (showHint)
+        setListHint(
+          resp
+            .split('\n')
+            .filter(linha => linha.charAt(0) <= '9' && linha.charAt(0) >= '0'),
+        );
+      else
+        setListQuest(
+          resp
+            .split('\n')
+            .filter(linha => linha.charAt(0) <= '9' && linha.charAt(0) >= '0'),
+        );
     }
   }, [resp]);
 
@@ -159,14 +171,23 @@ export default () => {
           </Button>
         </InputArea>
 
-        {lista != null && lista.length > 1 ? (
+        {showHint && listHint != null && listHint.length > 1 ? (
           <>
-            {lista.map((item, k) => (
-              <Label key={k} text={item} hint={showHint} comp={refInput} />
+            {listHint.map((item, k) => (
+              <Text key={k} text={item} hint={showHint} comp={refInput} />
             ))}
           </>
         ) : (
-          <Text>-</Text>
+          <></>
+        )}
+        {!showHint && listQuest != null && listQuest.length > 1 ? (
+          <>
+            {listQuest.map((item, k) => (
+              <Text key={k} text={item} hint={showHint} comp={refInput} />
+            ))}
+          </>
+        ) : (
+          <></>
         )}
 
         <View style={{minHeight: 10}} />
