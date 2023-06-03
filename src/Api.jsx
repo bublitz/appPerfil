@@ -13,7 +13,8 @@ export default {
         },
         body: `{"messages": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Para complementar meu jogo Perfil 7, gere uma carta com 20 dicas sobre ${what}, sem mencionar o tema nas questões."}], "max_tokens": 700, "model": "gpt-3.5-turbo"}`,
       });
-      json = await req.json();
+      const resp = await req.json();
+      json = resp.choices[0].message.content;
     } catch (error) {
       json = JSON.stringify({error});
     }
@@ -30,7 +31,8 @@ export default {
         },
         body: `{"messages": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Estou jogando Perfil 7. Me dê 200 sugestões de ${what} interessantes e famosas para fazer perguntas."}], "max_tokens": 700, "model": "gpt-3.5-turbo"}`,
       });
-      json = await req.json();
+      const resp = await req.json();
+      json = resp.choices[0].message.content;
     } catch (error) {
       json = JSON.stringify({error});
     }

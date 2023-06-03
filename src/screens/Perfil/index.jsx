@@ -50,7 +50,7 @@ export default () => {
         if (json.error || json.length == 0) {
           Toast.show('Tente novamente!', Toast.LONG);
         } else {
-          setResp(json.choices[0].message.content);
+          setResp(json);
           setShowHint(true);
         }
       }
@@ -75,7 +75,7 @@ export default () => {
         if (json.error || json.length == 0) {
           Toast.show('Tente novamente!', Toast.LONG);
         } else {
-          setResp(json.choices[0].message.content);
+          setResp(json);
           setShowHint(false);
         }
       }
