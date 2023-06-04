@@ -34,26 +34,17 @@ export default () => {
 
   const refInput = useRef(null);
 
-  const handleHintClick = async () => {
+  const handleHintClick = () => {
     if (text != '' || value != null) {
-      setResp('');
       setListQuest([]);
       setLoadHint(true);
       setShowHint(true);
-      let json = null;
-      try {
-        json = await Api.hint(value + ' ' + text);
-      } catch (err) {
-        Toast.show('Erro: ' + err.message, Toast.LONG);
-      } finally {
-        setLoadHint(false);
-        if (json.error || json.length == 0) {
-          Toast.show('Tente novamente!', Toast.LONG);
-        } else {
-          setResp(json);
-          setShowHint(true);
-        }
-      }
+      setText('');
+      const json = Api.hint(value);
+
+      setTimeout(() => {
+        setResp(json);
+      }, 1000);
     } else {
       Toast.show('Selecione um tema!', Toast.LONG);
     }
@@ -61,7 +52,6 @@ export default () => {
 
   const handleQuestClick = async () => {
     if (text != '' || value != null) {
-      setResp('');
       setListHint([]);
       setLoadQuest(true);
       setShowHint(false);
@@ -71,7 +61,6 @@ export default () => {
       } catch (err) {
         Toast.show('Erro: ' + err.message, Toast.LONG);
       } finally {
-        setLoadQuest(false);
         if (json.error || json.length == 0) {
           Toast.show('Tente novamente!', Toast.LONG);
         } else {
@@ -84,7 +73,28 @@ export default () => {
     }
   };
 
+  const handleDica = (hint, text) => {
+    const linha = text.split(' - ');
+    if (hint) {
+      if (value == 'Ano') {
+        setText(linha[0]);
+      } else {
+        setText(linha[1]);
+      }
+    }
+  };
+
+  const Item = ({index, text, hint}) => (
+    <Area onPress={() => handleDica(hint, text)}>
+      <InfoArea>
+        <TitleText key={index}>{text}</TitleText>
+      </InfoArea>
+    </Area>
+  );
+
   useEffect(() => {
+    setLoadHint(false);
+    setLoadQuest(false);
     if (resp != '') {
       if (showHint)
         setListHint(
@@ -112,6 +122,8 @@ export default () => {
           onSelect={(selectedItem, index) => {
             setValue(selectedItem);
             setText('');
+            setListHint([]);
+            setListQuest([]);
             refInput.current.focus();
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
@@ -171,19 +183,19 @@ export default () => {
           </Button>
         </InputArea>
 
-        {showHint && listHint != null && listHint.length > 1 ? (
+        {listHint != null && listHint.length > 1 ? (
           <>
             {listHint.map((item, k) => (
-              <Text key={k} text={item} hint={showHint} comp={refInput} />
+              <Item key={k} text={item} hint={showHint} />
             ))}
           </>
         ) : (
           <></>
         )}
-        {!showHint && listQuest != null && listQuest.length > 1 ? (
+        {listQuest != null && listQuest.length > 1 ? (
           <>
             {listQuest.map((item, k) => (
-              <Text key={k} text={item} hint={showHint} comp={refInput} />
+              <Item key={k} text={item} hint={showHint} />
             ))}
           </>
         ) : (

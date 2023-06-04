@@ -3,7 +3,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  margin: 1px;
+  padding: 15px;
+  background-color: #0069ea;
 `;
 
 export const LoadingIcon = styled.ActivityIndicator`
@@ -12,7 +13,7 @@ export const LoadingIcon = styled.ActivityIndicator`
 `;
 
 export const HeaderText = styled.Text`
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
   color: #fff;
   margin-bottom: 5px;
@@ -52,23 +53,26 @@ export const RespText = styled.Text`
 `;
 
 export const Area = styled.TouchableOpacity`
-  border-radius: 20px;
-  justify-content: space-around;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  justify-content: center;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  background-color: #0a1c2d;
 `;
 
 export const InfoArea = styled.View`
   flex: 1;
   margin-left: 15px;
-  margin-right: 15px;
+  margin-right: 5px;
   align-itens: center;
+  justify-content: center;
 `;
 
 export const TitleText = styled.Text`
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  color: #ffffff;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #e4e4e4;
 `;
